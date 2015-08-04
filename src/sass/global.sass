@@ -1,0 +1,111 @@
+//This file includes top-level global styling, such as site scaffolding
+
+@import "variables/_variables";
+
+*
+	-webkit-box-sizing: border-box
+	-moz-box-sizing: border-box
+	-ms-box-sizing: border-box
+	-o-box-sizing: border-box
+	box-sizing: border-box
+
+
+// Using CSS to set states which can be checked in JS
+// More info: http://davidwalsh.name/device-state-detection-css-media-queries-javascript
+.state-checks
+	position: fixed;
+	top: -200px;
+	font-size: 0;
+	pointer-events: none;
+
+@media #{$tablet-landscape-down}
+	.state-checks .is-tablet-landscape-down:before
+		content: 'true'
+
+@media #{$tablet-portrait-down}
+	.state-checks .is-tablet-portrait-down:before
+		content: 'true'
+
+@media #{$mobile-down}
+	.state-checks .is-mobile-down:before
+		content: 'true';
+
+@media #{$xl-up}
+	.state-checks .is-xl-up:before
+		content: 'true';
+
+
+*
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	-o-box-sizing: border-box;
+	box-sizing: border-box;
+
+
+body, html
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	color: #333;
+	padding: 0;
+	margin: 0;
+	overflow-y: scroll;
+	overflow-x: hidden;
+	min-height: 100%;
+
+
+body.pending
+	cursor: wait !important;
+
+body.pending *
+	cursor: wait !important;
+
+body.is-scrolling
+	pointer-events: none;
+
+
+::selection
+	background: #eee !important;
+
+::-moz-selection
+	background:#eee !important;
+
+
+a
+	-webkit-tap-highlight-color: rgba(0,0,0,0) !important;
+	outline: none !important;
+
+a img
+	outline: none !important;
+	border: none !important;
+
+a:active, a:focus
+	outline: none !important;
+
+a:active img, a:focus img
+	border: none !important;
+	outline: none !important;
+
+.page-context-wrap
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	backface-visibility: hidden;
+
+.page-context
+	width: 100%;
+	top: 0;
+	backface-visibility: hidden;
+	overflow: hidden;
+
+
+.clearfix:after
+	content: '';
+	clear: both;
+	position: relative;
+	width: 100%;
+	height: 0;
+	font-size: 0;
+	display: block;
+	visibility: hidden;
