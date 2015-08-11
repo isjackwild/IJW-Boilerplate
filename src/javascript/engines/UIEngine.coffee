@@ -14,16 +14,16 @@ class UIEngine
 	_elementList: []
 
 	constructor: ->
-		@init()
+		@_init()
 
-	init: =>
+	_init: =>
 		if @_isInit
 			return
 		@_isInit = true
 		@_addEventListeners()
 
 
-	kill: () ->
+	_kill: () ->
 		@_removeEventListeners()
 
 	_addEventListeners: () ->

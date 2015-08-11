@@ -21,9 +21,9 @@ class PageTransitionEngine
 
 
 	constructor: () ->
-		@init()
+		@_init()
 		
-	init: () ->
+	_init: () ->
 		if @_isInit
 			return
 		@_isInit = true
@@ -31,7 +31,7 @@ class PageTransitionEngine
 		@_pageContextWrap = document.getElementsByClassName('page-context-wrap')[0]
 
 
-	kill: () ->
+	_kill: () ->
 		@_removeEventListeners()
 
 

@@ -12,6 +12,7 @@ Router = require './Router'
 PageTransitionEngine = require './engines/PageTransitionEngine'
 MediaLoader = require './MediaLoader'
 UIEngine = require './engines/UIEngine'
+GlossaryController = require './modules/Glossary/GlossaryController'
 
 app.devices =
 	isMobileDown : null
@@ -28,6 +29,10 @@ app.scroll =
 	bottom : 0
 	pastFold : false
 
+app.mouse = 
+	x: 0
+	y: 0
+
 
 class Controller
 	_router: undefined
@@ -43,7 +48,9 @@ class Controller
 		@_router = new Router
 		@_pageTransitionEngine = new PageTransitionEngine
 		@_UIEngine = new UIEngine
+		@_GlossaryController = new GlossaryController
 		@_mediaLoader = new MediaLoader
+
 		
 
 	_init: ->
@@ -109,7 +116,8 @@ class Controller
 		xy = 
 			x: e.clientX
 			y: e.clientY
-		PubSub.publish 'mouse.move', xy
+		app.mouse = xy
+		PubSub.publish 'mouse.move', app.mouse
 
 
 	_getDeviceState: ->

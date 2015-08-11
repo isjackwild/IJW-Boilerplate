@@ -7,6 +7,10 @@ $ = require 'jquery'
 UTIL = require './vendor/ijw.UTIL' #My own home-made UTIL library
 classie = require 'desandro-classie'
 ImgExtended = require './modules/ImgExtended'
+Image360 = require './modules/Image360'
+ParticleImage = require './modules/ParticleImage/ParticleImage'
+HeaderImage = require './modules/HeaderImage/HeaderImage'
+
 
 class Router
 	_isInit: false
@@ -36,8 +40,16 @@ class Router
 		if @_isInit
 			return
 		@_isInit = true
+		
+		if window.sessionStorage and !app.devices.isTabletLandscapeDown
+			try
+				window.sessionStorage.setItem location.href, $('.page-context', document.body)[0].outerHTML
+			catch e
+				console.error 'Could not add to session storage', e
+				
 		@_setupLinks()
 		@_addEventListeners()
+
 
 		PubSub.publish 'route.start'
 		document.body.setAttribute 'data-page', document.getElementsByClassName('page-context')[0].id
@@ -49,11 +61,6 @@ class Router
 		
 		@_setupIncomingModules() #setup the current page modules and permanent modules
 		
-		if window.sessionStorage and !app.devices.isTabletLandscapeDown
-			try
-				window.sessionStorage.setItem location.href, $('.page-context', document.body)[0].outerHTML
-			catch e
-				console.error 'Could not add to session storage', e
 
 		history.pushState {page:location.href}, null, location.href #kinda bad hack to ignore the initial pop-state Safari does on load
 
@@ -225,6 +232,14 @@ class Router
 	_setupIncomingModules: => # Init our new modules
 		# if @_firstLoad is true # add our permanent modules
 			# @_permanentModules.push new Loader document.getElementsByClassName('loader-outer')[0]
+		for img in document.querySelectorAll('.incoming .-mod-img-360')
+			@_activeModules.push new Image360 img
+
+		for img in document.querySelectorAll('.incoming .-mod-particle-image')
+			@_activeModules.push new ParticleImage img
+
+		for header in document.querySelectorAll('.incoming .-mod-header-image')
+			@_activeModules.push new HeaderImage header
 
 		@_initIncomingModules()
 

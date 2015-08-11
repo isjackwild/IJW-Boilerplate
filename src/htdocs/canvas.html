@@ -1,0 +1,39 @@
+
+<!DOCTYPE html>
+<html lang="en-US">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width">
+		<meta name="viewport" content="initial-scale=1">
+		<link rel="stylesheet" href="style.css" type="text/css" media="screen"/>
+	</head>
+
+	<body>
+
+		<!-- page context -->
+		<div class='page-context-wrap'>
+		<div class="page-context  incoming animate-in">
+			<!-- <div class="img360" data-img-src="images/2294472375_24a3b8ef46_o.jpg"></div> -->
+			<div class="particleImage" data-img-src="images/1.jpg">
+				<canvas></canvas>
+				<img src='images/1.jpg'>
+			</div>
+		</div>
+		</div>
+
+		
+		<!-- These divs are hidden and the content is changed by CSS depending on screen size. This can then be read in JS to check our states -->
+		<div class='state-checks'>
+			<div class='is-tablet-landscape-down'></div>
+			<div class='is-tablet-portrait-down'></div>
+			<div class='is-mobile-down'></div>
+			<div class='is-xl-up'></div>
+		</div>
+
+	</body>
+
+	<script src="two.js"></script>
+	<script src="main.js"></script>
+
+</html>

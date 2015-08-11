@@ -109,3 +109,99 @@ a:active img, a:focus img
 	font-size: 0;
 	display: block;
 	visibility: hidden;
+
+
+
+
+
+
+
+
+
+.img360
+	position: fixed;
+	top: 60px;
+	left: 60px;
+	width: 500px;
+	height: 500px;
+	background: red;
+
+.particleImage
+	display: inline-block;
+	font-size: 0;
+	position: relative;
+	img
+		opacity: 0;
+		width: 1000px;
+		height: auto;
+		display: block;
+	canvas
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+
+p	
+	width: 50%;
+	display: block;
+	margin: auto;
+
+p.intro
+	font-weight: bold;
+	font-size: 1.5em;
+
+
+.-mod-glossary--shim
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: none;
+	background: rgba(0,0,0,0.88);
+	pointer-events: none;
+
+body.-mod-glossary--term-shown .-mod-glossary--shim
+	display: block;
+
+
+span.-mod-glossary--term
+	color: red;
+	text-transform: uppercase;
+	display: inline-block;
+	background: #ddd;
+	cursor: help;
+
+div.-mod-glossary--def-view
+	pointer-events: none;
+	opacity: 1 !important;
+	color: white;
+	span
+		display: block;
+		float: left;
+		opacity: 1 !important;
+
+span.-mod-glossary--term-span
+	text-transform: uppercase;
+	display: block;
+	float: left;
+
+span.-mod-glossary--def-span
+	width: 300px;
+
+
+
+.-mod-header-image
+	position: relative;
+	max-height: 80vh;
+	overflow: hidden;
+	img
+		width: 100%;
+	canvas
+		height: 100%;
+		width: 100%;
+		position: absolute;
+		top: 0;
+		left: 0;
+
