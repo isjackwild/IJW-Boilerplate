@@ -43,10 +43,11 @@ class ImgExtended
 		@_aspectRatio = @_naturalHeight / @_naturalWidth
 
 		@_wrap = if classie.has(@_el.parentNode, 'img-wrap') then @_el.parentNode else null
-		for child in @_el.parentNode.children
-			if classie.has(child, 'spacer')
-				@_spacer = child
-				break
+		if @_wrap
+			for child in @_el.parentNode.children
+				if classie.has(child, 'spacer')
+					@_spacer = child
+					break
 				
 		@_init()
 		if forceInit
@@ -85,6 +86,11 @@ class ImgExtended
 				else
 					@_el.src = @_srcMed
 			when 'large'
+				if app.devices.isMobileDown
+					@_el.src = @_srcMed
+				else
+					@_el.src = @_srcLarge
+			else
 				if app.devices.isMobileDown
 					@_el.src = @_srcMed
 				else

@@ -6,10 +6,12 @@ gator = require './vendor/gator.min'
 UTIL = require './vendor/ijw.UTIL' #My own home-made UTIL library
 classie = require 'desandro-classie'
 ImgExtended = require './modules/ImgExtended'
+VideoExtended = require './modules/VideoExtended'
 
 class MediaLoader
 	_isInit: false
-	_activeMedia: []
+	_activeImages: []
+	_activeVideos: []
 	_subscriptions: []
 
 	constructor: ->
@@ -36,24 +38,35 @@ class MediaLoader
 		@_loadCounter = 0
 
 		for image in document.querySelectorAll('.incoming img.lazy-load')
-			@_activeMedia.push new ImgExtended image
+			@_activeImages.push new ImgExtended image
+
+		for video in document.querySelectorAll('.incoming video.lazy-load')
+			@_activeVideos.push new VideoExtended video
+
+		for video in @_activeVideos
+			video.load()
 
 		for i in [0...3]
-			@_loadNextMedia()
+			@_loadNextImage()
 
 	_cancelLoading: =>
 		for subscription in @_subscriptions
 			PubSub.unsubscribe subscription
 
-		for media in @_activeMedia
-				media.kill() # Kill all our active modules from the leaving page
-			@_activeMedia = []
+		for image in @_activeImages
+				image.kill() # Kill all our active modules from the leaving page
+
+		for video in @_activeVideos
+				video.kill() # Kill all our active modules from the leaving page
+		
+		@_activeImages = []
+		@_activeVideos = []
 
 
-	_loadNextMedia: =>
-		if @_loadCounter >= @_activeMedia.length or @_activeMedia.length is 0
+	_loadNextImage: =>
+		if @_loadCounter >= @_activeImages.length or @_activeImages.length is 0
 			return
-		@_activeMedia[@_loadCounter].load()
+		@_activeImages[@_loadCounter].load()
 		@_loadCounter += 1
 
 
