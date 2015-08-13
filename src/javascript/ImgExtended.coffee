@@ -1,7 +1,6 @@
 # Get the namespace
 app = window.app = window.app || {}
 PubSub = require 'pubsub-js'
-UTIL = require '../vendor/ijw.UTIL'
 classie = require 'desandro-classie'
 _ = require 'lodash'
 
@@ -31,7 +30,7 @@ class ImgExtended
 
 	constructor: (el, forceInit) ->
 		@_el = el
-		PubSub.publish 'media.added'
+		PubSub.publish 'image.added'
 
 		@_srcThumb = @_el.getAttribute 'data-src-thumb'
 		@_srcMed = @_el.getAttribute 'data-src-med'
@@ -126,7 +125,8 @@ class ImgExtended
 		@_el.removeEventListener 'load', @_onLoaded
 		@_el.removeEventListener 'error', @_onError
 	
-		PubSub.publish 'media.loaded'
+		PubSub.publish 'image.loaded'
+		PubSub.publish 'viewport.recache'
 
 		window.requestAnimationFrame =>
 			classie.add @_el, 'ready'
@@ -137,7 +137,7 @@ class ImgExtended
 	_onError: (error) =>
 		console.error 'Error loading media. ' + error
 		clearTimeout @_timeoutTimeout
-		PubSub.publish 'media.error', @_el
+		PubSub.publish 'image.error', @_el
 		@_el.removeEventListener 'load', @_onLoaded
 		@_el.removeEventListener 'error', @_onError
 		classie.add @_el, 'failed'
@@ -146,7 +146,7 @@ class ImgExtended
 
 
 	_onTimeout: => #if it's taking ages to load, start loading the next  image
-		PubSub.publish 'media.timeout'
+		PubSub.publish 'image.timeout'
 
 
 	_setSpacerHeight: =>

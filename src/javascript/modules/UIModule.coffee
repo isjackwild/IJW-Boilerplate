@@ -12,6 +12,7 @@ class UIModule
 	_width: undefined
 	_height: undefined
 	_aspectRatio: undefined
+	_rect: undefined
 	_offset:
 		top: 0
 		bottom: 0
@@ -19,6 +20,9 @@ class UIModule
 		right: 0
 
 	_inVp: undefined
+
+	_RAFs: {}
+	_TOs: {}
 
 	constructor: (el) ->
 		@_el = el
@@ -33,6 +37,11 @@ class UIModule
 
 
 	kill: () -> # Cleanup.
+		for key of @_TOs
+			clearTimeout @_TOs[key]
+		for key of @_RAFs
+			cancelAnimationFrame @_RAFs[key]
+
 		@_removeEventListeners()
 		setTimeout =>
 			PubSub.publish 'module.kill'
@@ -60,15 +69,15 @@ class UIModule
 			obj.el.removeEventListener obj.event, obj.handler, false
 
 	_onResize: () =>
-		rect = @_el.getBoundingClientRect()
-		@_width = rect.width
-		@_height = rect.height
+		@_rect = @_el.getBoundingClientRect()
+		@_width = @_rect.width
+		@_height = @_rect.height
 		@_aspectRatio = @_width / @_height
-		@_cachePosition rect
+		@_cachePosition @_rect
 
 	
 	_cachePosition: (rect) =>
-		if !rect then rect = @_el.getBoundingClientRect()
+		if !rect then rect = @_rect = @_el.getBoundingClientRect()
 		@_offset =
 			top: rect.top + app.scroll.top
 			bottom: rect.bottom + app.scroll.top

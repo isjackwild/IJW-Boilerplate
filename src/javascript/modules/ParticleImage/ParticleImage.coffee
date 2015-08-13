@@ -20,7 +20,6 @@ class ParticleImage extends UIModule
 	_repellers: []
 
 	_isPlaying: false
-	_animateRAF: undefined
 	_lastCycle: undefined
 	_delta: 1
 
@@ -76,11 +75,6 @@ class ParticleImage extends UIModule
 		console.log @_two
 
 		@_img.src = @_imgSrc
-
-
-	kill: () ->
-		cancelAnimationFrame @_animateRAF
-		super()
 
 
 	_setupListeners: () ->
@@ -159,14 +153,14 @@ class ParticleImage extends UIModule
 		if @_lastCycle
 			@_delta = now - @_lastCycle
 			@_delta /= 16.666
-		@_animateRAF = requestAnimationFrame @_animate
+		@_RAFs.animate = requestAnimationFrame @_animate
 
 		@_update()
 		@_two.update()
 		@_lastCycle = now
 
 	_pause: () =>
-		cancelAnimationFrame @_animateRAF
+		cancelAnimationFrame @_RAFs.animate
 		@_isPlaying = false
 
 	_update: () ->

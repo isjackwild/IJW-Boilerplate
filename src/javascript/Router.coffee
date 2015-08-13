@@ -6,10 +6,11 @@ gator = require './vendor/gator.min'
 $ = require 'jquery'
 UTIL = require './vendor/ijw.UTIL' #My own home-made UTIL library
 classie = require 'desandro-classie'
-ImgExtended = require './modules/ImgExtended'
+
 Image360 = require './modules/Image360'
 ParticleImage = require './modules/ParticleImage/ParticleImage'
 HeaderImage = require './modules/HeaderImage/HeaderImage'
+ImageSeq = require './modules/ImageSequence'
 
 
 class Router
@@ -232,14 +233,18 @@ class Router
 	_setupIncomingModules: => # Init our new modules
 		# if @_firstLoad is true # add our permanent modules
 			# @_permanentModules.push new Loader document.getElementsByClassName('loader-outer')[0]
-		for img in document.querySelectorAll('.incoming .-mod-img-360')
+		for img in document.querySelectorAll('.incoming .mod-img-360')
 			@_activeModules.push new Image360 img
 
-		for img in document.querySelectorAll('.incoming .-mod-particle-image')
+		for img in document.querySelectorAll('.incoming .mod-particle-image')
 			@_activeModules.push new ParticleImage img
 
-		for header in document.querySelectorAll('.incoming .-mod-header-image')
+		for header in document.querySelectorAll('.incoming .mod-header-image')
 			@_activeModules.push new HeaderImage header
+
+		for seq in document.querySelectorAll('.incoming .mod-image-seq')
+			@_activeModules.push new ImageSeq seq
+
 
 		@_initIncomingModules()
 

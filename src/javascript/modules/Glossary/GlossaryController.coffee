@@ -97,9 +97,9 @@ class GlossaryController
 		for term in @_glossaryTerms
 			$("p:contains('"+term.term+"')").html (_, html) ->
 				re = new RegExp term.term, "gi"
-				return html.replace re, "<span class='-mod-glossary--term' data-definition='" + term.definition + "' data-term='" + term.term + "'>"+term.term+"</span>"
+				return html.replace re, "<span class='mod-glossary--term' data-definition='" + term.definition + "' data-term='" + term.term + "'>"+term.term+"</span>"
 
-		@_currentTermsOnPage = document.getElementsByClassName '-mod-glossary--term'
+		@_currentTermsOnPage = document.getElementsByClassName 'mod-glossary--term'
 		@_addEventListenersToTerms()
 
 
@@ -114,11 +114,11 @@ class GlossaryController
 			term.removeEventListener 'mouseleave', @_onMouseOutTerm
 
 	_onMouseOverTerm: (e) =>
-		classie.add document.body, '-mod-glossary--term-shown'
+		classie.add document.body, 'mod-glossary--term-shown'
 		@_defView = new DefView e.currentTarget
 
 	_onMouseOutTerm: (e) =>
-		classie.remove document.body, '-mod-glossary--term-shown'
+		classie.remove document.body, 'mod-glossary--term-shown'
 		if @_defView
 			@_defView.remove()
 			@_defView = false

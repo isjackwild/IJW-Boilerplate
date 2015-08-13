@@ -14,7 +14,6 @@ class HeaderImage extends UIModule
 	_repellers: []
 
 	_isPlaying: false
-	_animateRAF: undefined
 	_lastCycle: undefined
 	_delta: 1
 
@@ -55,10 +54,6 @@ class HeaderImage extends UIModule
 		setTimeout =>
 			@_setupParticles()
 		,111
-
-	kill: () ->
-		cancelAnimationFrame @_animateRAF
-		super()
 
 
 	_setupListeners: () ->
@@ -133,13 +128,13 @@ class HeaderImage extends UIModule
 		if @_lastCycle
 			@_delta = now - @_lastCycle
 			@_delta /= 16.666
-		@_animateRAF = requestAnimationFrame @_animate
+		@_RAFs.animate = requestAnimationFrame @_animate
 
 		@_update()
 		@_lastCycle = now
 
 	_pause: () =>
-		cancelAnimationFrame @_animateRAF
+		cancelAnimationFrame @_RAFs.animate
 		@_isPlaying = false
 
 	_update: () ->

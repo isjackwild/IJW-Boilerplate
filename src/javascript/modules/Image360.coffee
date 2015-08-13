@@ -15,8 +15,6 @@ class Image360 extends UIModule
 
 	_sceneIsSetup: false
 	_isPlaying: false
-	_animateRAF: undefined
-	_decelerateRAF: undefined
 
 	_isInteracting: false
 	_isDecelarating: false
@@ -104,14 +102,14 @@ class Image360 extends UIModule
 		@_vel.y *= 1-@_friction
 
 		@_isDecelarating = true
-		@_decelerateRAF = requestAnimationFrame @_decelerate
+		@_RAFs.decelerate = requestAnimationFrame @_decelerate
 
 		if Math.abs(@_vel.x) < 0.2 and Math.abs(@_vel.y) < 0.2
 			@_cancelDecelerate()
 
 	
 	_cancelDecelerate: () =>
-		cancelAnimationFrame @_decelerateRAF
+		cancelAnimationFrame @_RAFs.decelerate
 		@_isDecelarating = false
 
 
@@ -192,11 +190,11 @@ class Image360 extends UIModule
 		if !_sceneIsSetup
 			return
 		@_isPlaying = true
-		@_animateRAF = requestAnimationFrame @_animate
+		@_RAFs.animate = requestAnimationFrame @_animate
 		@_update()
 
 	_pause: () =>
-		cancelAnimationFrame @_animateRAF
+		cancelAnimationFrame @_RAFs.animate
 		@_isPlaying = false
 
 	_update: () ->

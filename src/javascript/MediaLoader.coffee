@@ -5,8 +5,8 @@ PubSub = require 'pubsub-js'
 gator = require './vendor/gator.min'
 UTIL = require './vendor/ijw.UTIL' #My own home-made UTIL library
 classie = require 'desandro-classie'
-ImgExtended = require './modules/ImgExtended'
-VideoExtended = require './modules/VideoExtended'
+ImgExtended = require './ImgExtended'
+VideoExtended = require './VideoExtended'
 
 class MediaLoader
 	_isInit: false
@@ -32,9 +32,9 @@ class MediaLoader
 
 
 	_loadMedia: => # _Init our new modules
-		@_subscriptions.push PubSub.subscribe 'media.loaded', @_loadNextMedia
-		@_subscriptions.push PubSub.subscribe 'media.error', @_loadNextMedia
-		@_subscriptions.push PubSub.subscribe 'media.timeout', @_loadNextMedia
+		@_subscriptions.push PubSub.subscribe 'image.loaded', @_loadNextImage
+		@_subscriptions.push PubSub.subscribe 'image.error', @_loadNextImage
+		@_subscriptions.push PubSub.subscribe 'image.timeout', @_loadNextImage
 		@_loadCounter = 0
 
 		for image in document.querySelectorAll('.incoming img.lazy-load')

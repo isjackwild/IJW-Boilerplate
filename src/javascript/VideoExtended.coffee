@@ -1,7 +1,6 @@
 # Get the namespace
 app = window.app = window.app || {}
 PubSub = require 'pubsub-js'
-UTIL = require '../vendor/ijw.UTIL'
 classie = require 'desandro-classie'
 _ = require 'lodash'
 
@@ -49,7 +48,7 @@ class VideoExtended
 					@_placeholderImg = child
 					break
 				
-		PubSub.publish 'media.added'
+		PubSub.publish 'video.added'
 		@_init()
 
 		
@@ -90,7 +89,7 @@ class VideoExtended
 
 	_addEventListeners: () =>
 		@_subscriptions.push PubSub.subscribe 'viewport.resize', _.debounce(@_cacheOffsets,1333)
-		@_subscriptions.push PubSub.subscribe 'media.loaded', _.debounce(@_cacheOffsets,1333)
+		@_subscriptions.push PubSub.subscribe 'viewport.recache', _.debounce(@_cacheOffsets,1333)
 		if !app.devices.isTabletLandscapeDown
 			@_subscriptions.push PubSub.subscribe 'viewport.scroll', @_checkInVp
 		window.addEventListener 'focus', @checkInVp
@@ -108,17 +107,16 @@ class VideoExtended
 
 	_onLoaded: =>
 		@_loaded = true	
-		PubSub.publish 'media.loaded'
 
 		window.requestAnimationFrame =>
 			classie.add @_el, 'ready'
 			if @_wrap
 				classie.add @_wrap, 'ready'
+			@_cacheOffsets()
 			@_checkInVp()
+			PubSub.publish 'viewport.recache'
 
 
-	_onTimeout: => #if it's taking ages to load, start loading the next  image
-		PubSub.publish 'media.timeout'
 
 	_cacheOffsets: =>
 		if !@_el

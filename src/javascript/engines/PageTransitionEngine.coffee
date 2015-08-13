@@ -78,6 +78,7 @@ class PageTransitionEngine
 
 		setTimeout =>
 			PubSub.publish 'transition.complete'
+			PubSub.publish 'viewport.recache'
 			@_transitionType = 'default'
 			app.scroll.top = document.body.scrollTop || document.getElementsByTagName('html')[0].scrollTop
 		,0
